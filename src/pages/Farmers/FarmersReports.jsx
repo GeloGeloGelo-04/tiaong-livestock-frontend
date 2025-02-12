@@ -15,6 +15,7 @@ import header2 from "../../assets/images/header2.jpg";
 const CustomToolbar = () => {
   const { contentRef } = useData();
   const reactToPrintFn = useReactToPrint({ contentRef });
+
   return (
     <TableToolbar
       titleText="Farmer's Report"
@@ -170,6 +171,7 @@ const FarmersReports = () => {
               borderCollapse: "collapse",
               textAlign: "left",
               fontFamily: "Arial, sans-serif",
+              zIndex: 1,
             }}
           >
             <thead>
@@ -265,33 +267,37 @@ const FarmersReports = () => {
           </table>
           <div
             style={{
-              position: "absolute",
-              bottom: 0,
               zIndex: 1,
               width: "100%",
               fontFamily: "serif",
-              display: "flex",
+              position: "relative",
               justifyContent: "center",
-              paddingBottom: "64px",
             }}
           >
-            <p style={{ maxWidth: 600 }}>
-              2nd Flr., Tiaong Municipal Hall, Don V. Robles St., Brgy.
-              Poblacion III, Tiaong, Quezon Email: TiaongQuezon.PIO@gmail.com |
-              Facebook: Tiaong Public Information Office
-            </p>
-          </div>
-
-          <img
-            src={header2}
-            style={{
+            <div style={{
               width: "100%",
               position: "absolute",
-              bottom: 0,
-            }}
-          />
+              display: "flex",
+              justifyContent: "center",
+              top: 4,
+            }}>
+              <p style={{
+                width: 600,
+              }}>
+                2nd Flr., Tiaong Municipal Hall, Don V. Robles St., Brgy.
+                Poblacion III, Tiaong, Quezon Email: TiaongQuezon.PIO@gmail.com |
+                Facebook: Tiaong Public Information Office
+              </p>
+            </div>
+            <img
+              src={header2}
+              style={{
+                width: "100%",
+              }}
+            />
+          </div>
         </div>
-      </div>
+      </div >
     </>
   );
 };

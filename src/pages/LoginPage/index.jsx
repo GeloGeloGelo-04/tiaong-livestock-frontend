@@ -111,11 +111,10 @@ const LoginPage = () => {
       setFirstname("");
       setLastname("");
       setMiddlename("");
-
+      setErrMsg("");
+      setAlertOpen(true);
       setAlertSev("success");
       setAlertMsg(response?.data?.success);
-      setAlertOpen(true);
-      setErrMsg("");
       setVerificationOpen(true);
     } catch (error) {
       console.log(error);
@@ -146,8 +145,8 @@ const LoginPage = () => {
       setResetPassOpen(true);
       setSendOTPOpen(false);
       setAlertSev("success");
-      setAlertMsg("OTP sent. Check your email.");
       setAlertOpen(true);
+      setAlertMsg("Check your email for the One-Time-Password (OTP)");
       setEmail(email3);
       setEmail3("");
     } catch (error) {
@@ -172,9 +171,8 @@ const LoginPage = () => {
 
       setVerificationOpen(false);
       setAlertSev("success");
-      setAlertMsg("OTP VERIFIED SUCCESSFULLY");
       setAlertOpen(true);
-
+      setAlertMsg("OTP VERIFIED SUCCESSFULLY");
       setOtp("");
       setId("");
     } catch (error) {
@@ -604,6 +602,7 @@ const LoginPage = () => {
           </Button>
         }
       >
+        <Typography>Check your email for the One-Time-Password &#40;OTP&#41;</Typography>
         <TextField
           autoFocus
           label="Enter your OTP"
@@ -660,6 +659,7 @@ const LoginPage = () => {
           </Button>
         }
       >
+        <Typography>Check your email for the One-Time-Password &#40;OTP&#41;</Typography>
         <TextField
           autoFocus
           label="Enter your OTP"

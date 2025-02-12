@@ -3,42 +3,43 @@ import { PageContainer } from "../../components/layout/PageContainer";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { LineChart, PieChart } from "@mui/x-charts";
 import { TIAONG_BRGY } from "../../utils/constant";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import useData from "../../hooks/useData";
 
 const barangayColors = {
-  Anastacia: "#FAD02E", // Yellow
-  Aquino: "#F28D35", // Orange
-  "Ayusan I": "#6A4C93", // Red
-  "Ayusan II": "#F25F5C", // Purple
-  Behia: "#F1C6A4", // Light Brown
-  Bukal: "#A9D2B4", // Mint Green
-  Bula: "#3F88C5", // Blue
-  Bulakin: "#36A2EB", // Light Blue
-  Cabatang: "#FF6F61", // Coral Red
-  Cabay: "#FFDA77", // Soft Yellow
-  "Del Rosario": "#B7E4C7", // Light Green
-  Lagalag: "#E9CBA7", // Sand
-  Lalig: "#F6A4D4", // Soft Pink
-  Lumingon: "#A2D2FF", // Sky Blue
-  Lusacan: "#D4A5A5", // Dusty Rose
-  Paiisa: "#D4E157", // Lime Green
-  Palagaran: "#E57373", // Light Red
-  Quipot: "#81C784", // Soft Green
-  "San Agustin": "#FFB74D", // Amber
-  "San Isidro": "#FF8A65", // Soft Orange
-  "San Jose": "#7B1FA2", // Deep Purple
-  "San Juan": "#4CAF50", // Green
-  "San Pedro": "#FF7043", // Deep Orange
-  Tagbakin: "#64B5F6", // Light Blue
-  Talisay: "#FFB300", // Bright Yellow
-  Tamisian: "#9E9D24", // Olive Green
-  "San Francisco": "#00BCD4", // Teal
-  Manggahan: "#FF8C00", // Dark Orange
-  Mabuhay: "#6B8E23", // Olive Green
-  Poblacion: "#8B4513", // Saddle Brown
-  Mayumi: "#800080", // Purple
+  Anastacia: "#FFD700", // Gold
+  Aquino: "#FF4500", // Orange Red
+  "Ayusan I": "#DC143C", // Crimson
+  "Ayusan II": "#800080", // Purple
+  Behia: "#8B4513", // Saddle Brown
+  Bukal: "#008000", // Green
+  Bula: "#0000FF", // Blue
+  Bulakin: "#4682B4", // Steel Blue
+  Cabatang: "#FF1493", // Deep Pink
+  Cabay: "#FFA500", // Orange
+  "Del Rosario": "#32CD32", // Lime Green
+  Lagalag: "#D2691E", // Chocolate
+  Lalig: "#FF69B4", // Hot Pink
+  Lumingon: "#87CEFA", // Light Sky Blue
+  Lusacan: "#A52A2A", // Brown
+  Paiisa: "#ADFF2F", // Green Yellow
+  Palagaran: "#B22222", // Firebrick
+  Quipot: "#556B2F", // Dark Olive Green
+  "San Agustin": "#FF6347", // Tomato
+  "San Isidro": "#DAA520", // Goldenrod
+  "San Jose": "#4B0082", // Indigo
+  "San Juan": "#228B22", // Forest Green
+  "San Pedro": "#CD5C5C", // Indian Red
+  Tagbakin: "#1E90FF", // Dodger Blue
+  Talisay: "#FFD700", // Gold
+  Tamisian: "#8B0000", // Dark Red
+  "San Francisco": "#00CED1", // Dark Turquoise
+  Manggahan: "#FF7F50", // Coral
+  Mabuhay: "#556B2F", // Dark Olive Green
+  Poblacion: "#2F4F4F", // Dark Slate Gray
+  Mayumi: "#9932CC", // Dark Orchid
 };
+
 
 const FarmersDashB = () => {
   const { farmersPerBarangay } = useData();
@@ -47,10 +48,11 @@ const FarmersDashB = () => {
 
   const data = farmersPerBarangay
     ? farmersPerBarangay?.map((item, index) => ({
-        id: index,
-        value: item?.totalLivestock,
-        label: item?.barangay,
-      }))
+      id: index,
+      value: item?.totalLivestock,
+      label: item?.barangay,
+      color: barangayColors[item?.barangay] || `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+    }))
     : [];
 
   return (
@@ -58,31 +60,58 @@ const FarmersDashB = () => {
       titleText="Barangay Records"
       subText="Number of Farmers per Barangay"
     >
-      <PieChart
-        labelStyle={{
-          fill: "white",
-          fontSize: "10px",
-        }}
-        series={[
-          {
-            data: data,
-            arcLabel: "value",
-            highlightScope: { faded: "series", highlighted: "item" },
-            faded: {
-              innerRadius: 20,
-              additionalRadius: -30,
-              color: "gray",
+      <Box sx={{ flex: 1, display: "flex", justifyContent: "center", width: "100%", height: "100%" }}>
+        <PieChart
+          labelStyle={{
+            fill: "white",
+            fontSize: "10px",
+          }}
+          slotProps={{ legend: { hidden: true } }}
+          series={[
+            {
+              data: data,
+              arcLabel: "value",
+              highlightScope: { faded: "series", highlighted: "item" },
+              faded: {
+                innerRadius: 20,
+                additionalRadius: -30,
+                color: "gray",
+              },
+              innerRadius: 30,
+              cornerRadius: 5,
+              startAngle: -180,
+              endAngle: 360,
+              paddingAngle: 1,
+              valueFormatter: (params) =>
+                `${params.value} ${params.value > 1 ? "Farmers" : "Farmer"}`,
             },
-            innerRadius: 30,
-            cornerRadius: 5,
-            startAngle: -180,
-            endAngle: 360,
-            paddingAngle: 1,
-            valueFormatter: (params) =>
-              `${params.value} ${params.value > 1 ? "Farmers" : "Farmer"}`,
-          },
-        ]}
-      />
+          ]}
+        />
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap={1}
+          mt={2}
+          sx={{
+            width: "30%",
+            maxHeight: "600px",
+            overflowY: "auto",
+          }}
+        >
+          {data.map((item, index) => (
+            <Stack key={index} direction="row" alignItems="center" spacing={1}>
+              <Box
+                sx={{
+                  width: 16,
+                  height: 16,
+                  backgroundColor: item.color,
+                }}
+              />
+              <Typography fontSize={16} variant="caption">{item.label}</Typography>
+            </Stack>
+          ))}
+        </Box>
+      </Box>
     </PageContainer>
   );
 };
