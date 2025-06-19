@@ -21,7 +21,8 @@ import { getGridStringOperators } from "@mui/x-data-grid";
 
 // export const BASE_URL = "https://tiaong-livestock-backend.onrender.com";
 // export const BASE_URL = "http://localhost:3500";
-export const BASE_URL = "https://tiaong-livestock-backend-cdga.onrender.com";
+// export const BASE_URL = "https://tiaong-livestock-backend-cdga.onrender.com";
+export const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
